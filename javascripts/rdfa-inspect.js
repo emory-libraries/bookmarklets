@@ -64,6 +64,29 @@
         parent.append(h3);
     }
 
+    var rdf_first = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#first';
+    var rdf_rest = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#rest';
+    var rdf_nil = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#nil';
+
+    function is_rdf_list(subject) {
+        var prop = document.data.getProperties(subject);
+        return (prop.length == 2 &&
+            prop.indexOf(rdf_first) !== -1 &&
+            prop.indexOf(rdf_rest) !== -1);
+    }
+
+    function rdf_list_text(subject) {
+        // recursively generate text based on an rdf list
+        var txt =  document.data.getValues(subject, rdf_first)[0];
+        var next = document.data.getValues(subject, rdf_rest)[0];
+        if (next != rdf_nil) {
+            txt += ', ' + rdf_list_text(next);
+        }
+        // FIXME: should there be some indication that this is based on an rdf list?
+        return txt;
+    }
+
+
     function inspect_rdfa() {
 
         var subjects = document.data.getSubjects();
@@ -90,9 +113,15 @@
 
         // display information from RDFa triples
         for (var i = 0; i < subjects.length; i++) {
-            var sdiv = $("<div/>");
-
             var s = subjects[i];
+
+            // skip rdf lists - will be displayed as a comma-delimited text
+            // list where originally referenced as a subject
+            if (is_rdf_list(s)) {
+                continue;
+            }
+
+            var sdiv = $("<div/>");
             add_subject_label(sdiv, s);
 
             var ul = $("<ul/>");
@@ -118,9 +147,14 @@
                 if (values.length == 1) {
                     var val = values[0];
                     is_subject = (subjects.indexOf(val) != -1);
+
+
                     var txt  = short_name + ' ';
                     li = $("<li/>");
-                    if (is_subject && short_name != 'schema:url') {
+                    // special case: check for rdf list
+                    if (is_subject && is_rdf_list(val)) {
+                        li.text(txt + rdf_list_text(val));
+                    } else if (is_subject && short_name != 'schema:url') {
                         li.text(txt).append($('<a/>').attr('href', '#' + val).text(val));
                     } else {
                         li.text(txt + val);
