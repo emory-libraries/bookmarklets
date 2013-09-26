@@ -1,6 +1,7 @@
 (function(){
 
     var v = "1.3.2";
+
     // add jquery if not already available
     if (window.jQuery === undefined || window.jQuery.fn.jquery < v) {
         load_javascript("http://ajax.googleapis.com/ajax/libs/jquery/" + v + "/jquery.min.js");
@@ -32,7 +33,7 @@
 
     function add_css(url) {
         // if CSS has already been added to document, do nothing
-        if ($("link[href=" + url + "]").length) { return; }
+        if ($('link[href="' + url + '"]').length) { return; }
         var link = document.createElement("link");
         link.href = url;
         link.rel = "stylesheet";
