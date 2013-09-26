@@ -21,7 +21,7 @@
 
     // TODO: need to host a copy of this somewhere referenceable
     add_css("http://yui.yahooapis.com/3.12.0/build/cssreset-context/cssreset-context-min.css");
-    add_css("https://raw.github.com/emory-libraries/bookmarklets/master/css/rdfa-inspect.css");
+    add_css("http://emory-libraries.github.io/bookmarklets/css/rdfa-inspect.css");
 
     function load_javascript(url) {
         var script = document.createElement("script");
