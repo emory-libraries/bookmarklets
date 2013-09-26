@@ -36,6 +36,10 @@
 
         <p>This bookmarklet provides a simple way to inspect RDFa embedded in a web page.</p>
 
+        <p><i>Note:</i> for now, if you are attempting to inspect RDFa on a page loaded over HTTPS,
+          by default your browser will block this bookmarklet because it is loading unencrypted content.
+          You will have to use the browser override to allow the bookmarklet to proceed.</p>
+
         <p><a href="javascript:(function(){if(window.inspect_rdfa!==undefined){inspect_rdfa();}else{document.body.appendChild(document.createElement('script')).src='http://emory-libraries.github.io/bookmarklets/javascripts/rdfa-inspect.js';}})();">Inspect RDFa</a></p>
 
 
