@@ -1,4 +1,0 @@
-bookmarklets
-============
-
-javascript bookmarklets
