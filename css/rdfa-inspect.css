@@ -1,0 +1,36 @@
+#rdfa-inspect {
+    position: absolute;
+    width: 90%;
+    height: 80%;
+    overflow:scroll;
+    border: 2px solid gray;
+    top: 25px;
+    left: 25px;
+    background-color: white;
+    padding: 25px;
+    text-align:left;
+    z-index: 50;
+}
+#rdfa-inspect ul {
+    list-style-type: disc;
+    list-style-position: inside;
+}
+#rdfa-inspect ul ul {
+    list-style-type: circle;
+    list-style-position: inside;
+    margin-left: 15px;
+}
+#rdfa-inspect h3 {
+    font-weight: bold;
+    margin-top: 1em;
+}
+
+#rdfa-inspect .close {
+    position: fixed;
+    display: inline-block;
+    width: 90%;
+    text-align: right;
+    font-weight: bold;
+
+}
+

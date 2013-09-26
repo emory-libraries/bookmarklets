@@ -8,7 +8,7 @@
     // load GreenTurtle javascript RDFa if not available
     if (document.data === undefined) {
         // load rdfa library and then trigger bookmarklet
-        load_javascript("https://raw.github.com/emory-libraries/bookmarklets/master/js/RDFa.min.1.2.0.js");
+        load_javascript("http://emory-libraries.github.io/bookmarklets/javascripts/RDFa.min.1.2.0.js");
         document.addEventListener(
             "rdfa.loaded",
             function() { inspect_rdfa(); },
