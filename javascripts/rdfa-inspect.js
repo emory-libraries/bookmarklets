@@ -1,34 +1,43 @@
 (function(){
 
-    var v = "1.3.2";
+    var v = "1.3.2";  // minimal version to install if not present
 
     // add jquery if not already available
     if (window.jQuery === undefined || window.jQuery.fn.jquery < v) {
-        load_javascript("http://ajax.googleapis.com/ajax/libs/jquery/" + v + "/jquery.min.js");
-    }
-    // load GreenTurtle javascript RDFa if not available
-    if (document.data === undefined) {
-        // load rdfa library and then trigger bookmarklet
-        load_javascript("http://emory-libraries.github.io/bookmarklets/javascripts/RDFa.min.1.2.0.js");
-        document.addEventListener(
-            "rdfa.loaded",
-            function() { inspect_rdfa(); },
-            false
-        );
+      var script = load_javascript("http://ajax.googleapis.com/ajax/libs/jquery/" + v + "/jquery.min.js");
+
+      script.onload = function(){ load_rdf(); };
+      script.onreadystatechange = function() {
+        if (this.readyState == 'complete') load_rdf();
+      };
     } else {
-        // if javascript rdfa is already available, simply launch bookmarklet
-        inspect_rdfa();
+        load_rdf();
     }
 
-    // TODO: need to host a copy of this somewhere referenceable
-    add_css("http://yui.yahooapis.com/3.12.0/build/cssreset-context/cssreset-context-min.css");
-    add_css("http://emory-libraries.github.io/bookmarklets/css/rdfa-inspect.css");
+    function load_rdf() {
+        // load GreenTurtle javascript RDFa if not available
+        if (document.data === undefined) {
+            // load rdfa library and then trigger bookmarklet
+            load_javascript("http://emory-libraries.github.io/bookmarklets/javascripts/RDFa.min.1.2.0.js");
+            document.addEventListener(
+                "rdfa.loaded",
+                function() { inspect_rdfa(); },
+                false
+            );
+        } else {
+            // if javascript rdfa is already available, simply launch bookmarklet
+            inspect_rdfa();
+        }
+
+        add_css("http://yui.yahooapis.com/3.12.0/build/cssreset-context/cssreset-context-min.css");
+        add_css("http://emory-libraries.github.io/bookmarklets/css/rdfa-inspect.css");
+    }
 
     function load_javascript(url) {
         var script = document.createElement("script");
         script.src = url;
         document.getElementsByTagName("head")[0].appendChild(script);
-        console.log('added ' + url);
+        return script;  // return so we can check when it's loaded
     }
 
     function add_css(url) {
@@ -40,7 +49,6 @@
         link.type = "text/css";
         link.media = "screen";
         document.getElementsByTagName("head")[0].appendChild(link);
-        console.log('added CSS ' + url);
     }
 
 
@@ -102,6 +110,12 @@
             $('#rdfa-inspect').show();
             return;
         }
+
+        // NOTE or possible TODO
+        // might be useful to list prefixes & urls
+        // prefixes available at document.data.prefixes
+        // possibly an associative array with prefix -> uri ?
+        // if not, use document.data.getMapping(prefix) to get uri
 
         // create a div with a close button
         var div = $("<div id='rdfa-inspect' class='yui3-cssreset'/>");
