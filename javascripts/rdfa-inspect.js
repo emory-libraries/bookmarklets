@@ -42,7 +42,7 @@
 
     function add_css(url) {
         // if CSS has already been added to document, do nothing
-        if ($('link[href="' + url + '"]').length) { return; }
+        if (jQuery('link[href="' + url + '"]').length) { return; }
         var link = document.createElement("link");
         link.href = url;
         link.rel = "stylesheet";
@@ -56,9 +56,9 @@
         // create a heading & label for a subject
         // displays first schema.org/name, if any, and uri (if not a blank node)
         var names = document.data.getValues(subject, 'http://schema.org/name');
-        var h3 = $("<h3/>");
+        var h3 = jQuery("<h3/>");
         var label = '';
-        var anchor = $("<a/>").attr('name', subject);
+        var anchor = jQuery("<a/>").attr('name', subject);
         if (names.length) {
             label = names[0];
         }
@@ -106,8 +106,8 @@
         }
         // if div already exists from a previous run of bookmarklet on this page,
         // simple redisplay it and exit.
-        if ($('#rdfa-inspect').length !== 0) {
-            $('#rdfa-inspect').show();
+        if (jQuery('#rdfa-inspect').length !== 0) {
+            jQuery('#rdfa-inspect').show();
             return;
         }
 
@@ -118,13 +118,13 @@
         // if not, use document.data.getMapping(prefix) to get uri
 
         // create a div with a close button
-        var div = $("<div id='rdfa-inspect' class='yui3-cssreset'/>");
-        var close = $("<a class='close' title='close'>X</a>");
-        close.click(function() {$("#rdfa-inspect").hide(); });
+        var div = jQuery("<div id='rdfa-inspect' class='yui3-cssreset'/>");
+        var close = jQuery("<a class='close' title='close'>X</a>");
+        close.click(function() {jQuery("#rdfa-inspect").hide(); });
         div.append(close);
-        div.append($("<h1>RDFa</h1>"));
+        div.append(jQuery("<h1>RDFa</h1>"));
 
-        $("body").append(div);
+        jQuery("body").append(div);
 
         // display information from RDFa triples
         for (var i = 0; i < subjects.length; i++) {
@@ -136,10 +136,10 @@
                 continue;
             }
 
-            var sdiv = $("<div/>");
+            var sdiv = jQuery("<div/>");
             add_subject_label(sdiv, s);
 
-            var ul = $("<ul/>");
+            var ul = jQuery("<ul/>");
 
             var properties = document.data.getProperties(s);
             for (var j = 0; j < properties.length; j++) {
@@ -165,12 +165,12 @@
 
 
                     var txt  = short_name + ' ';
-                    li = $("<li/>");
+                    li = jQuery("<li/>");
                     // special case: check for rdf list
                     if (is_subject && is_rdf_list(val)) {
                         li.text(txt + rdf_list_text(val));
                     } else if (is_subject && short_name != 'schema:url') {
-                        li.text(txt).append($('<a/>').attr('href', '#' + val).text(val));
+                        li.text(txt).append(jQuery('<a/>').attr('href', '#' + val).text(val));
                     } else {
                         li.text(txt + val);
                     }
@@ -178,14 +178,14 @@
 
                 // multiple values: display property with nested list of values
                 } else {
-                    li = $("<li/>").text(short_name);
-                    var sublist = $("<ul/>");
+                    li = jQuery("<li/>").text(short_name);
+                    var sublist = jQuery("<ul/>");
 
                     for (var k = 0; k < values.length; k++) {
                         is_subject = (subjects.indexOf(values[k]) != -1);
-                        var subli = $("<li/>");
+                        var subli = jQuery("<li/>");
                         if (is_subject && short_name != 'schema:url') {
-                            subli.append($('<a/>').attr('href', '#' + values[k]).text(values[k]));
+                            subli.append(jQuery('<a/>').attr('href', '#' + values[k]).text(values[k]));
                         } else {
                             subli.text(values[k]);
                         }
