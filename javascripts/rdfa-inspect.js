@@ -1,6 +1,11 @@
+---
+---
 (function(){
 
-    var v = "1.3.2";  // minimal version to install if not present
+    var base_url = "{{ site.url }}";
+    var debug = {% if  site.debug %}true{% else %}false{% endif %};
+
+    var v = "1.3.2";  //minimal version to install if not present
 
     // add jquery if not already available
     if (window.jQuery === undefined || window.jQuery.fn.jquery < v) {
@@ -18,7 +23,7 @@
         // load GreenTurtle javascript RDFa if not available
         if (document.data === undefined) {
             // load rdfa library and then trigger bookmarklet
-            load_javascript("http://emory-libraries.github.io/bookmarklets/javascripts/RDFa.min.1.2.0.js");
+            load_javascript(base_url + "javascripts/RDFa.min.1.2.0.js");
             document.addEventListener(
                 "rdfa.loaded",
                 function() { inspect_rdfa(); },
@@ -30,10 +35,11 @@
         }
 
         add_css("http://yui.yahooapis.com/3.12.0/build/cssreset-context/cssreset-context-min.css");
-        add_css("http://emory-libraries.github.io/bookmarklets/css/rdfa-inspect.css");
+        add_css(base_url + "css/rdfa-inspect.css");
     }
 
     function load_javascript(url) {
+        if (debug) { console.log('loading javascript ' + url); }
         var script = document.createElement("script");
         script.src = url;
         document.getElementsByTagName("head")[0].appendChild(script);
@@ -43,6 +49,7 @@
     function add_css(url) {
         // if CSS has already been added to document, do nothing
         if (jQuery('link[href="' + url + '"]').length) { return; }
+        if (debug) { console.log('adding css ' + url); }
         var link = document.createElement("link");
         link.href = url;
         link.rel = "stylesheet";
@@ -118,13 +125,15 @@
         // if not, use document.data.getMapping(prefix) to get uri
 
         // create a div with a close button
-        var div = jQuery("<div id='rdfa-inspect' class='yui3-cssreset'/>");
-        var close = jQuery("<a class='close' title='close'>X</a>");
+        var wrapper = jQuery("<div id='rdfa-inspect' class='yui3-cssreset'/>");
+        var content_div = jQuery("<div class='card'/>");
+        var close = jQuery("<a class='close' title='close'>x</a>");
         close.click(function() {jQuery("#rdfa-inspect").hide(); });
-        div.append(close);
-        div.append(jQuery("<h1>RDFa</h1>"));
+        wrapper.append(content_div);
+        content_div.append(close);
+        wrapper.append(jQuery("<h1>RDFa</h1>"));
 
-        jQuery("body").append(div);
+        jQuery("body").append(wrapper);
 
         // display information from RDFa triples
         for (var i = 0; i < subjects.length; i++) {
@@ -199,7 +208,7 @@
             } // end properties loop
 
             sdiv.append(ul);
-            div.append(sdiv);
+            content_div.append(sdiv);
         } // end subjects loop
 
     } // end inspect_rdfa

@@ -1,0 +1,67 @@
+---
+---
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Bookmarklets : javascript bookmarklets" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Bookmarklets</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/emory-libraries/bookmarklets">View on GitHub</a>
+
+          <h1 id="project_title">Bookmarklets</h1>
+          <!-- <h2 id="project_tagline">javascript bookmarklets</h2> -->
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/emory-libraries/bookmarklets/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/emory-libraries/bookmarklets/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+
+        <h3>RDFa Inspect</h3>
+
+        <p>This bookmarklet provides a simple way to inspect RDFa embedded in a web page.</p>
+
+        <p><i>Note:</i> for now, if you are attempting to inspect RDFa on a page loaded over HTTPS,
+          by default your browser will block this bookmarklet because it is loading unencrypted content.
+          You will have to use the browser override to allow the bookmarklet to proceed.</p>
+
+        <p><a href="javascript:(function(){if(window.inspect_rdfa!==undefined){inspect_rdfa();}else{document.body.appendChild(document.createElement('script')).src='{{ site.url }}javascripts/rdfa-inspect.js';}})();">Inspect RDFa {% if site.debug %}(DEV){% endif %}</a></p>
+
+
+        <hr/>
+
+        <p>To install the bookmarklet, drag the link to your bookmarks toolbar or right-click and add to your favorites.</p>
+
+
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Bookmarklets maintained by <a href="https://github.com/emory-libraries">emory-libraries</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+
+
+  </body>
+</html>
