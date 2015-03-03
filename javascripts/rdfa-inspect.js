@@ -9,7 +9,7 @@
 
     // add jquery if not already available
     if (window.jQuery === undefined || window.jQuery.fn.jquery < v) {
-      var script = load_javascript("http://ajax.googleapis.com/ajax/libs/jquery/" + v + "/jquery.min.js");
+      var script = load_javascript("//ajax.googleapis.com/ajax/libs/jquery/" + v + "/jquery.min.js");
 
       script.onload = function(){ load_rdf(); };
       script.onreadystatechange = function() {
@@ -34,7 +34,7 @@
             inspect_rdfa();
         }
 
-        add_css("http://yui.yahooapis.com/3.12.0/build/cssreset-context/cssreset-context-min.css");
+        add_css("//yui.yahooapis.com/3.12.0/build/cssreset-context/cssreset-context-min.css");
         add_css(base_url + "css/rdfa-inspect.css");
     }
 
