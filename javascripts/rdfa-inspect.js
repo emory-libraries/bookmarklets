@@ -163,25 +163,21 @@
                 }
                 var values = document.data.getValues(s, prop);
                 var is_subject;
-                var li;
-
-                // TODO: special handling for RDF lists?
+                var li = jQuery("<li/>");
+                li.append(jQuery("<span class='pred'/>").text(short_name));
 
                 // single value: display property + value
                 if (values.length == 1) {
                     var val = values[0];
                     is_subject = (subjects.indexOf(val) != -1);
 
-
-                    var txt  = short_name + ' ';
-                    li = jQuery("<li/>");
                     // special case: check for rdf list
                     if (is_subject && is_rdf_list(val)) {
-                        li.text(txt + rdf_list_text(val));
+                        li.append(jQuery("<span class='obj'/>").text(rdf_list_text(val)));
                     } else if (is_subject && short_name != 'schema:url') {
-                        li.text(txt).append(jQuery('<a/>').attr('href', '#' + val).text(val));
+                        li.append(jQuery('<a/>').attr('href', '#' + val).text(val));
                     } else {
-                        li.text(txt + val);
+                        li.append(jQuery("<span class='obj'/>").text(val));
                     }
                     ul.append(li);
 
