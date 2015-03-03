@@ -1,3 +1,5 @@
+---
+---
 <!DOCTYPE html>
 <html>
 
@@ -40,8 +42,7 @@
           by default your browser will block this bookmarklet because it is loading unencrypted content.
           You will have to use the browser override to allow the bookmarklet to proceed.</p>
 
-        <p><a href="javascript:(function(){if(window.inspect_rdfa!==undefined){inspect_rdfa();}else{document.body.appendChild(document.createElement('script')).src='http://emory-libraries.github.io/bookmarklets/javascripts/rdfa-inspect.js';}})();">Inspect RDFa</a></p>
-
+        <p><a href="javascript:(function(){if(window.inspect_rdfa!==undefined){inspect_rdfa();}else{document.body.appendChild(document.createElement('script')).src='{{ site.url }}javascripts/rdfa-inspect.js';}})();">Inspect RDFa {% if site.debug %}(DEV){% endif %}</a></p>
 
 
         <hr/>
