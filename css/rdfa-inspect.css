@@ -52,3 +52,12 @@
 #rdfa-inspect .close:focus {
     opacity:1;
 }
+
+/* styles for RDF predicate/object */
+#rdfa-inspect .pred {
+    padding-right: 0.5em;
+}
+
+#rdfa-inspect .obj {
+    font-weight: bold;
+}
