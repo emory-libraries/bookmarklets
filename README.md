@@ -10,10 +10,22 @@ For more information and installation instructions, see [bookmarklets github pag
 Developer Notes
 ---------------
 
-To use your local copy of the bookmarklets, you should do the following:
-- checkout the **gh-pages** branch 
-- make sure you have jekyll installed
-- run the site via jekyll, with development config options: 
-  ```jekyll serve -w --config _dev-config.yml```
+This project uses [git-flow](https://github.com/nvie/gitflow) branching conventions.
 
-Currently bookmarks are made available through GitHub site pages in the gh-pages branch, with only the local javascript and css code mirrored to the master branch (which requires some manual merging and updating to keep them synchronized).  We may revisit this setup in future. 
+To use your local copy of the bookmarklets, you should do the following:
+- make sure you are on the **develop** branch
+- make sure you have jekyll installed
+- run the site via jekyll, with development config options: ```jekyll serve -w --config _dev-config.yml```
+- install the development version of the bookmarklet from your locally running
+  version of the site, i.e. http://localhost:4000/
+
+Bookmarklets are published through GitHub site pages, which are served out from
+the gh-pages branch.  Following git-flow conventions, this should be an exact
+replica of the master branch.  To automatically push master to the gh-pages branch
+on github whenever you push updates to master, add the following to your
+.git/config in the ```[remote "origin"]``` section:
+
+    push = refs/heads/master:refs/heads/gh-pages
+    push = refs/heads/master:refs/heads/master
+
+
