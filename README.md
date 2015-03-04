@@ -16,9 +16,9 @@ To use your local copy of the bookmarklets, you should do the following:
 - make sure you are on the **develop** branch
 - make sure you have [jekyll installed](http://jekyllrb.com/docs/installation/)
 - run the site via jekyll, with flags to reload modified files and load
-  the development config file: ```jekyll serve -w --config _dev-config.yml```
+  the development config file: ```jekyll serve -w --config _dev-config.yml --port 4004```
 - install the development version of the bookmarklet from your locally running
-  version of the site, i.e. http://localhost:4000/
+  version of the site, i.e. http://localhost:4004/
 
 Bookmarklets are published through GitHub site pages, which are served out from
 the gh-pages branch.  Following git-flow conventions, this should be an exact
@@ -33,6 +33,3 @@ Alternatively, you can create an alias to switch to the gh-pages branch, update
 it from master, and then push it to GitHub:
 
     alias gh-publish="git checkout gh-pages && git merge master && git push origin gh-pages && git checkout -"
-
-
-
