@@ -1,10 +1,19 @@
+---
+---
 (function(){
 
+<<<<<<< HEAD
     var v = "1.3.2";  // minimal version to install if not present
+=======
+    var base_url = "{{ site.url }}";
+    var debug = {% if  site.debug %}true{% else %}false{% endif %};
+
+    var v = "1.3.2";  //minimal version to install if not present
+>>>>>>> gh-pages
 
     // add jquery if not already available
     if (window.jQuery === undefined || window.jQuery.fn.jquery < v) {
-      var script = load_javascript("http://ajax.googleapis.com/ajax/libs/jquery/" + v + "/jquery.min.js");
+      var script = load_javascript("//ajax.googleapis.com/ajax/libs/jquery/" + v + "/jquery.min.js");
 
       script.onload = function(){ load_rdf(); };
       script.onreadystatechange = function() {
@@ -18,7 +27,7 @@
         // load GreenTurtle javascript RDFa if not available
         if (document.data === undefined) {
             // load rdfa library and then trigger bookmarklet
-            load_javascript("http://emory-libraries.github.io/bookmarklets/javascripts/RDFa.min.1.2.0.js");
+            load_javascript(base_url + "javascripts/RDFa.min.1.2.0.js");
             document.addEventListener(
                 "rdfa.loaded",
                 function() { inspect_rdfa(); },
@@ -29,11 +38,12 @@
             inspect_rdfa();
         }
 
-        add_css("http://yui.yahooapis.com/3.12.0/build/cssreset-context/cssreset-context-min.css");
-        add_css("http://emory-libraries.github.io/bookmarklets/css/rdfa-inspect.css");
+        add_css("//yui.yahooapis.com/3.12.0/build/cssreset-context/cssreset-context-min.css");
+        add_css(base_url + "css/rdfa-inspect.css");
     }
 
     function load_javascript(url) {
+        if (debug) { console.log('loading javascript ' + url); }
         var script = document.createElement("script");
         script.src = url;
         document.getElementsByTagName("head")[0].appendChild(script);
@@ -43,6 +53,10 @@
     function add_css(url) {
         // if CSS has already been added to document, do nothing
         if (jQuery('link[href="' + url + '"]').length) { return; }
+<<<<<<< HEAD
+=======
+        if (debug) { console.log('adding css ' + url); }
+>>>>>>> gh-pages
         var link = document.createElement("link");
         link.href = url;
         link.rel = "stylesheet";
@@ -118,13 +132,15 @@
         // if not, use document.data.getMapping(prefix) to get uri
 
         // create a div with a close button
-        var div = jQuery("<div id='rdfa-inspect' class='yui3-cssreset'/>");
-        var close = jQuery("<a class='close' title='close'>X</a>");
+        var wrapper = jQuery("<div id='rdfa-inspect' class='yui3-cssreset'/>");
+        var content_div = jQuery("<div class='card'/>");
+        var close = jQuery("<a class='close' title='close'>x</a>");
         close.click(function() {jQuery("#rdfa-inspect").hide(); });
-        div.append(close);
-        div.append(jQuery("<h1>RDFa</h1>"));
+        wrapper.append(content_div);
+        content_div.append(close);
+        wrapper.append(jQuery("<h1>RDFa</h1>"));
 
-        jQuery("body").append(div);
+        jQuery("body").append(wrapper);
 
         // display information from RDFa triples
         for (var i = 0; i < subjects.length; i++) {
@@ -154,25 +170,21 @@
                 }
                 var values = document.data.getValues(s, prop);
                 var is_subject;
-                var li;
-
-                // TODO: special handling for RDF lists?
+                var li = jQuery("<li/>");
+                li.append(jQuery("<span class='pred'/>").text(short_name));
 
                 // single value: display property + value
                 if (values.length == 1) {
                     var val = values[0];
                     is_subject = (subjects.indexOf(val) != -1);
 
-
-                    var txt  = short_name + ' ';
-                    li = jQuery("<li/>");
                     // special case: check for rdf list
                     if (is_subject && is_rdf_list(val)) {
-                        li.text(txt + rdf_list_text(val));
+                        li.append(jQuery("<span class='obj'/>").text(rdf_list_text(val)));
                     } else if (is_subject && short_name != 'schema:url') {
-                        li.text(txt).append(jQuery('<a/>').attr('href', '#' + val).text(val));
+                        li.append(jQuery('<a/>').attr('href', '#' + val).text(val));
                     } else {
-                        li.text(txt + val);
+                        li.append(jQuery("<span class='obj'/>").text(val));
                     }
                     ul.append(li);
 
@@ -199,7 +211,7 @@
             } // end properties loop
 
             sdiv.append(ul);
-            div.append(sdiv);
+            content_div.append(sdiv);
         } // end subjects loop
 
     } // end inspect_rdfa
