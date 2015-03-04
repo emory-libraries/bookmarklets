@@ -62,6 +62,7 @@
         // create a heading & label for a subject
         // displays first schema.org/name, if any, and uri (if not a blank node)
         var names = document.data.getValues(subject, 'http://schema.org/name');
+        var header = jQuery("<div/>").addClass('header');
         var h3 = jQuery("<h3/>");
         var label = '';
         var anchor = jQuery("<a/>").attr('name', subject);
@@ -76,7 +77,8 @@
         }
         anchor.text(label);
         h3.append(anchor);
-        parent.append(h3);
+        header.append(h3);
+        parent.append(header);
     }
 
     var rdf_first = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#first';
@@ -144,7 +146,7 @@
                 continue;
             }
 
-            var sdiv = jQuery("<div/>");
+            var sdiv = jQuery("<div/>").addClass('section');
             add_subject_label(sdiv, s);
 
             var ul = jQuery("<ul/>");
@@ -182,12 +184,14 @@
 
                 // multiple values: display property with nested list of values
                 } else {
-                    li = jQuery("<li/>").text(short_name);
-                    var sublist = jQuery("<ul/>");
+                    var li = jQuery("<li/>");
+                    li.append(jQuery("<span class='pred'/>").text(short_name));
+                    var sublist = jQuery("<ul/>").addClass("sublist");
 
                     for (var k = 0; k < values.length; k++) {
                         is_subject = (subjects.indexOf(values[k]) != -1);
                         var subli = jQuery("<li/>");
+                        
                         if (is_subject && short_name != 'schema:url') {
                             subli.append(jQuery('<a/>').attr('href', '#' + values[k]).text(values[k]));
                         } else {
