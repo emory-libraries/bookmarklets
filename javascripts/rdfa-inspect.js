@@ -2,10 +2,9 @@
 ---
 (function(){
 
+    var v = "1.3.2";  // minimal version to install if not present
     var base_url = "{{ site.url }}";
     var debug = {% if  site.debug %}true{% else %}false{% endif %};
-
-    var v = "1.3.2";  //minimal version to install if not present
 
     // add jquery if not already available
     if (window.jQuery === undefined || window.jQuery.fn.jquery < v) {
