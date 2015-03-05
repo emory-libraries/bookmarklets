@@ -2,7 +2,7 @@
 ---
 (function(){
 
-    var v = "1.3.2";  // minimal version to install if not present
+    var v = "1.7.0";  // minimal version to install if not present
     var base_url = "{{ site.url }}";
     var debug = {% if  site.debug %}true{% else %}false{% endif %};
 
@@ -105,7 +105,6 @@
 
 
     function inspect_rdfa() {
-
         var subjects = document.data.getSubjects();
         // if document does not contain any triples, notify user and exit
         if (subjects.length === 0) {
@@ -113,7 +112,7 @@
             return;
         }
         // if div already exists from a previous run of bookmarklet on this page,
-        // simple redisplay it and exit.
+        // simply redisplay it and exit.
         if (jQuery('#rdfa-inspect').length !== 0) {
             jQuery('#rdfa-inspect').show();
             return;
@@ -135,6 +134,13 @@
         wrapper.append(jQuery("<h1>RDFa</h1>"));
 
         jQuery("body").append(wrapper);
+
+        // bind escape key to close the div;
+        // TODO namespace this to avoid colliding with site functionality
+        jQuery(document).on('keydown.key27', function(event) {
+            if (event.keyCode == 27)
+            jQuery('#rdfa-inspect').hide();
+        });
 
         // display information from RDFa triples
         for (var i = 0; i < subjects.length; i++) {
@@ -191,7 +197,7 @@
                     for (var k = 0; k < values.length; k++) {
                         is_subject = (subjects.indexOf(values[k]) != -1);
                         var subli = jQuery("<li/>");
-                        
+
                         if (is_subject && short_name != 'schema:url') {
                             subli.append(jQuery('<a/>').attr('href', '#' + values[k]).text(values[k]));
                         } else {
