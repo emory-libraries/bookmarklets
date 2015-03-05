@@ -135,11 +135,12 @@
 
         jQuery("body").append(wrapper);
 
-        // bind escape key to close the div;
-        // TODO namespace this to avoid colliding with site functionality
-        jQuery(document).on('keydown.key27', function(event) {
-            if (event.keyCode == 27)
-            jQuery('#rdfa-inspect').hide();
+        // bind escape key to close the div
+        jQuery(document).on('keydown.rdfa_inspect', function(event) {
+            console.log(event);
+            if (event.keyCode == 27) {
+                jQuery('#rdfa-inspect').hide();
+            }
         });
 
         // display information from RDFa triples
