@@ -103,6 +103,16 @@
         return txt;
     }
 
+    function rdf_list_li(subject, ul) {
+        // recursively add li items to a ul based on an rdf list
+        var txt =  document.data.getValues(subject, rdf_first)[0];
+        ul.append(jQuery('<li/>').text(txt));
+        var next = document.data.getValues(subject, rdf_rest)[0];
+        if (next != rdf_nil) {
+            rdf_list_li(next, ul);
+        }
+    }
+
 
     function inspect_rdfa() {
         var subjects = document.data.getSubjects();
@@ -181,7 +191,11 @@
 
                     // special case: check for rdf list
                     if (is_subject && is_rdf_list(val)) {
-                        li.append(jQuery("<span class='obj'/>").text(rdf_list_text(val)));
+                        // use sublist for rdf list items, for better display
+                        var sublist = jQuery('<ul class="sublist rdflist"/>');
+                        rdf_list_li(val, sublist);
+                        li.append(sublist);
+
                     } else if (is_subject && short_name != 'schema:url') {
                         li.append(jQuery('<a/>').attr('href', '#' + val).text(val));
                     } else {
