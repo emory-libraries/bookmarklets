@@ -29,3 +29,10 @@ in your ``.git/config`` for this project:
     [alias]
         publish-pages = "!git checkout gh-pages && git merge master && git push origin gh-pages && git checkout -"
 
+To publish to QA for testing, build the site with the QA config file:
+
+    jekyll build -c _qa_config.yml
+
+Then copy the built site files in the ``_site`` directory to the appropriate directory on the QA webserver, e.g.:
+
+    scp -r _site/* qaserver:/home/httpd/bookmarklet
