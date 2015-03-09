@@ -2,7 +2,9 @@ Bookmarklets
 ============
 
 Currently available bookmarklets:
-- Inspect RDFa
+- **Inspect RDFa**: summary of all RDFa on a webpage
+- **Highlight RDFa**: highlight RDFa blocks and provide tooltip-style information
+  about the RDFa data
 
 For more information and installation instructions, see [bookmarklets github pages site](http://emory-libraries.github.io/bookmarklets/).
 
