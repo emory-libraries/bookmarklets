@@ -41,7 +41,8 @@
             highlight_rdfa();
         }
 
-        add_css("http://yui.yahooapis.com/3.18.1/build/cssreset-context/cssreset-context-min.css");
+        // NOTE: using all: unset in CSS instead of yahoo ui reset
+        // add_css("http://yui.yahooapis.com/3.18.1/build/cssreset-context/cssreset-context-min.css");
         add_css(base_url + "css/rdfa-highlight.css");
     }
 
@@ -134,7 +135,6 @@
                 }
             }
         }
-        console.log(context);
 
         // get RDF values and the corresponding html elements where they originated
         var value_origins = document.data.getValueOrigins();
@@ -163,7 +163,6 @@
                 add_subject_label(div, item.value);
                 // add context information
                 var ctx = context[s];
-                console.log('context for ' + s + ' is ' + ctx[1] + ' ' + ctx[0]);
                 var ctxdiv = jQuery('<div class="context"/>');
                 ctxdiv.text(ctx[1] + ' ' + ctx[0] + ' ' + s);
                 div.append(ctxdiv);

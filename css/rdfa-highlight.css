@@ -15,7 +15,7 @@
 .rdfa-item > .rdfa-tooltip {
     z-index:10;
     display:none;
-    padding:0px 20px;
+    padding:0 20px;
     margin-top:-30px;
     margin-left:10px;
     line-height:16px;
@@ -27,6 +27,7 @@
     }
 
 .rdfa-tooltip {
+    all: unset;
     border-radius:4px;
     box-shadow: 5px 5px 8px #CCC;
 }
@@ -46,6 +47,7 @@
 }
 
 .rdfa-tooltip ul {
+  all: unset;
   list-style-type: none;
   list-style-position: inside;
 }
@@ -56,6 +58,11 @@
 .rdfa-tooltip h3 {
   font-weight: bold;
   margin-top: 1em;
+}
+.rdfa-tooltip li {
+  all: unset;
+  display: block;
+  margin: 0;
 }
 
 
@@ -75,7 +82,7 @@
 }
 
 .rdfa-tooltip .section li{
-  word-break: break-word;
+  word-break: keep-all;
 }
 
 .rdfa-tooltip .sublist>li {
@@ -99,4 +106,3 @@
   background: #E5F7D1;
   color: rgb(2, 2, 2);
 }
-x

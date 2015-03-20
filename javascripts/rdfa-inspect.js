@@ -115,7 +115,7 @@
 
 
     function inspect_rdfa() {
-        var subjects = document.data.getSubjects();
+
         // if document does not contain any triples, notify user and exit
         if (subjects.length === 0) {
             alert('No RDFa found on this page.');
