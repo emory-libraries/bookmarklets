@@ -37,4 +37,4 @@ To publish to QA for testing, build the site with the QA config file:
 
 Then copy the built site files in the ``_site`` directory to the appropriate directory on the QA webserver, e.g.:
 
-    scp -r _site/* qaserver:/home/httpd/bookmarklet
+    scp -r _site/* testbookmarklet:/home/httpd/bookmarklet
