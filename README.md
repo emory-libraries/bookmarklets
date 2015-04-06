@@ -31,6 +31,9 @@ in your ``.git/config`` for this project:
     [alias]
         publish-pages = "!git checkout gh-pages && git merge master && git push origin gh-pages && git checkout -"
 
+When you tag a new release, also update the version number in the page metadata
+of index.html for public display.
+
 To publish to QA for testing, build the site with the QA config file:
 
     jekyll build -c _qa_config.yml
