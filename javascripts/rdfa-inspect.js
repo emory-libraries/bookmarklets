@@ -2,7 +2,7 @@
 ---
 (function(){
 
-    var v = "1.3.2";  // minimal version to install if not present
+    var v = "1.7.0";  // minimal version to install if not present
     var base_url = "{{ site.url }}";
     var debug = {% if  site.debug %}true{% else %}false{% endif %};
 
@@ -103,17 +103,27 @@
         return txt;
     }
 
+    function rdf_list_li(subject, ul) {
+        // recursively add li items to a ul based on an rdf list
+        var txt =  document.data.getValues(subject, rdf_first)[0];
+        ul.append(jQuery('<li/>').text(txt));
+        var next = document.data.getValues(subject, rdf_rest)[0];
+        if (next != rdf_nil) {
+            rdf_list_li(next, ul);
+        }
+    }
+
 
     function inspect_rdfa() {
-
         var subjects = document.data.getSubjects();
+
         // if document does not contain any triples, notify user and exit
         if (subjects.length === 0) {
             alert('No RDFa found on this page.');
             return;
         }
         // if div already exists from a previous run of bookmarklet on this page,
-        // simple redisplay it and exit.
+        // simply redisplay it and exit.
         if (jQuery('#rdfa-inspect').length !== 0) {
             jQuery('#rdfa-inspect').show();
             return;
@@ -135,6 +145,14 @@
         wrapper.append(jQuery("<h1>RDFa</h1>"));
 
         jQuery("body").append(wrapper);
+
+        // bind escape key to close the div
+        jQuery(document).on('keydown.rdfa_inspect', function(event) {
+            console.log(event);
+            if (event.keyCode == 27) {
+                jQuery('#rdfa-inspect').hide();
+            }
+        });
 
         // display information from RDFa triples
         for (var i = 0; i < subjects.length; i++) {
@@ -174,7 +192,11 @@
 
                     // special case: check for rdf list
                     if (is_subject && is_rdf_list(val)) {
-                        li.append(jQuery("<span class='obj'/>").text(rdf_list_text(val)));
+                        // use sublist for rdf list items, for better display
+                        var sublist = jQuery('<ul class="sublist rdflist"/>');
+                        rdf_list_li(val, sublist);
+                        li.append(sublist);
+
                     } else if (is_subject && short_name != 'schema:url') {
                         li.append(jQuery('<a/>').attr('href', '#' + val).text(val));
                     } else {
@@ -191,7 +213,7 @@
                     for (var k = 0; k < values.length; k++) {
                         is_subject = (subjects.indexOf(values[k]) != -1);
                         var subli = jQuery("<li/>");
-                        
+
                         if (is_subject && short_name != 'schema:url') {
                             subli.append(jQuery('<a/>').attr('href', '#' + values[k]).text(values[k]));
                         } else {

@@ -2,7 +2,9 @@ Bookmarklets
 ============
 
 Currently available bookmarklets:
-- RDFa summary
+- **Inspect RDFa**: summary of all RDFa on a webpage
+- **Highlight RDFa**: highlight RDFa blocks and provide tooltip-style information
+  about the RDFa data
 
 For more information and installation instructions, see [bookmarklets github pages site](http://emory-libraries.github.io/bookmarklets/).
 
@@ -22,14 +24,20 @@ To use your local copy of the bookmarklets, you should do the following:
 
 Bookmarklets are published through GitHub site pages, which are served out from
 the gh-pages branch.  Following git-flow conventions, this should be an exact
-replica of the master branch.  To automatically push master to the gh-pages branch
-on github whenever you push updates to GitHub, add the following to your
-.git/config in the ```[remote "origin"]``` section:
+replica of the master branch.  As a convenience, to update the gh-pages branch
+from master and push it to github, you may want to configure the following alias
+in your ``.git/config`` for this project:
 
-    push = refs/heads/master:refs/heads/gh-pages
-    push = refs/heads/master:refs/heads/master
+    [alias]
+        publish-pages = "!git checkout gh-pages && git merge master && git push origin gh-pages && git checkout -"
 
-Alternatively, you can create an alias to switch to the gh-pages branch, update
-it from master, and then push it to GitHub:
+When you tag a new release, also update the version number in the page metadata
+of index.html for public display.
 
-    alias gh-publish="git checkout gh-pages && git merge master && git push origin gh-pages && git checkout -"
+To publish to QA for testing, build the site with the QA config file:
+
+    jekyll build -c _qa_config.yml
+
+Then copy the built site files in the ``_site`` directory to the appropriate directory on the QA webserver, e.g.:
+
+    scp -r _site/* testbookmarklet:/home/httpd/bookmarklet

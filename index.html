@@ -1,4 +1,5 @@
 ---
+version: 1.0
 ---
 <!DOCTYPE html>
 <html>
@@ -34,16 +35,15 @@
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
 
-        <h3>RDFa Inspect</h3>
+        <h3>RDFa Utilities</h3>
 
-        <p>This bookmarklet provides a simple way to inspect RDFa embedded in a web page.</p>
+        <p>These bookmarklets provide simple ways to inspect RDFa embedded in a web page.</p>
 
-        <p><i>Note:</i> for now, if you are attempting to inspect RDFa on a page loaded over HTTPS,
-          by default your browser will block this bookmarklet because it is loading unencrypted content.
-          You will have to use the browser override to allow the bookmarklet to proceed.</p>
+        <p><a href="javascript:(function(){if(window.inspect_rdfa!==undefined){inspect_rdfa();}else{document.body.appendChild(document.createElement('script')).src='{{ site.url }}javascripts/rdfa-inspect.js';}})();">Inspect RDFa {% if site.env != "PROD" %}({{ site.env }}){% endif %}</a>
+            - view a summary of all RDFa on a web page</p>
 
-        <p><a href="javascript:(function(){if(window.inspect_rdfa!==undefined){inspect_rdfa();}else{document.body.appendChild(document.createElement('script')).src='{{ site.url }}javascripts/rdfa-inspect.js';}})();">Inspect RDFa {% if site.debug %}(DEV){% endif %}</a></p>
-
+        <p><a href="javascript:(function(){if(window.highlight_rdfa!==undefined){highlight_rdfa();}else{document.body.appendChild(document.createElement('script')).src='{{ site.url }}javascripts/rdfa-highlight.js';}})();">Highlight RDFa {% if site.env != "PROD" %}({{ site.env }}){% endif %}</a>
+            - highlight sections of a webpage with RDFa and provide tooltip-style information</p>
 
         <hr/>
 
@@ -56,8 +56,9 @@
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
       <footer class="inner">
-        <p class="copyright">Bookmarklets maintained by <a href="https://github.com/emory-libraries">emory-libraries</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+        <p class="copyright">Bookmarklets {{ page.version }}
+            maintained by <a href="https://github.com/emory-libraries">emory-libraries</a>,
+            published with <a href="http://pages.github.com">GitHub Pages</a>.</p>
       </footer>
     </div>
 
