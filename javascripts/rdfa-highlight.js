@@ -130,7 +130,9 @@
                     var val = values[k];
                     var is_subject = (subjects.indexOf(val) != -1);
                     if (is_subject) {
-                        context[val] = Array(document.data.shorten(p), s);
+                        // NOTE: shorten only works for predefined prefixes.
+                        // Not evident how to get graph prefixes/ns.
+                        context[val] = Array(document.data.shorten(p)||p, s);
                     }
                 }
             }
