@@ -1,6 +1,13 @@
 Changelog
 =========
 
+1.0.1
+-----
+
+- Bugfix for RDFa highlight: context predicates with prefixes not in the
+  predefined set cannot be shortened and were displayed as 'null'; now
+  displays the unshortened predicate for those URIs.
+
 1.0
 ---
 
