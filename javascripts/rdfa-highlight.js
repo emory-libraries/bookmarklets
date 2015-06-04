@@ -54,10 +54,7 @@ var rdfa_highlight = {
                 div = jQuery('<div class="yui3-cssreset rdfa-tooltip"/>');
                 rdfa_utils.add_subject_label(div, item.value);
                 // add context information
-                var ctx = context[s];
-                var ctxdiv = jQuery('<div class="context"/>');
-                ctxdiv.text(ctx[1] + ' ' + ctx[0] + ' ' + s);
-                div.append(ctxdiv);
+                rdfa_utils.add_context(s, context, div);
 
                 var ul = jQuery("<ul/>");
                 //copied directly from rdfa-inspect; move into shared code

@@ -43,11 +43,14 @@
 
 #rdfa-inspect .context {
     background: #878787;
-    color: white;
+    color: white !important;
     padding: 15px 25px;
     margin: 0 -25px 0;
 }
 
+#rdfa-inspect .context:nth-child(even) {
+  background: #A2A2A2;
+}
 
 #rdfa-inspect .card{
   position:relative;

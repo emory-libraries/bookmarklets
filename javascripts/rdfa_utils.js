@@ -47,7 +47,6 @@ var rdfa_utils = {
         }
     },
 
-
     add_css: function(url) {
         // if CSS has already been added to document, do nothing
         if (jQuery('link[href="' + url + '"]').length) { return; }
@@ -98,7 +97,7 @@ var rdfa_utils = {
     rdf_object_context: function() {
         // generate a mapping of object relation contexts
         // (since turtle API doesn't seem to expose this functionality)
-        // lookup via object: object -> predicate, subject
+        // lookup via object: object -> list of {predicate: p, subject: s}
         var context = {};
         var subjects = document.data.getSubjects();
         for (var i = 0; i < subjects.length; i ++) {
@@ -111,15 +110,35 @@ var rdfa_utils = {
                     var val = values[k];
                     var is_subject = (subjects.indexOf(val) != -1);
                     if (is_subject) {
+                        // create context list of not yet set
+                        if (context[val] == undefined) {
+                            context[val] = Array();
+                        }
+
                         // NOTE: shorten only works for predefined prefixes.
                         // Not evident how to get graph prefixes/ns.
-                        context[val] = Array(document.data.shorten(p)||p, s);
+                        context[val].push({
+                            predicate: document.data.shorten(p)||p,
+                            subject: s
+                        });
                     }
                 }
             }
-            // TODO: handle multiple contexts
         }
         return context;
+    },
+
+    add_context: function(s, context, div) {
+        // add context information for display
+        var ctx = context[s];
+        if (ctx !== undefined) {
+            var ctxdiv;
+            for (var j = 0; j < ctx.length; j++) {
+                ctxdiv = jQuery('<div class="context"/>');
+                ctxdiv.text(ctx[j].subject + ' ' + ctx[j].predicate + ' ' + s);
+                div.append(ctxdiv);
+            }
+        }
     },
 
     rdf_first: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#first',
@@ -143,6 +162,8 @@ var rdfa_utils = {
         }
     }
 
-
+    // TODO: add utility method to get namespaces from
+    // html document element via document.documentElement.attributes
+    // xmlns:* attributes and use for shortening URIs
 
 };
