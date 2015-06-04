@@ -1,28 +1,27 @@
 ---
 ---
-(function(){
+// namespace bookmarklet functionality within rdf_inspect
+var rdfa_inspect = {
 
-    var base_url = "{{ site.url }}";
+    base_url: "{{ site.url }}",
+    css: "css/rdfa-inspect.css", // relative to base url
 
     // load shared RDFa/bookmark utilities
-    var load_rdfa_utils = function (load_func) {
+    load_rdfa_utils: function (load_func) {
         //{% if site.debug %}
            console.log('loading rdfa utils');
         //{% endif %};
         var script = document.createElement("script");
         script.type = "text\/javascript";
-        script.src =  base_url + "javascripts/rdfa_utils.js";
+        script.src =  rdfa_inspect.base_url + "javascripts/rdfa_utils.js";
         script.onload = load_func;
         document.currentScript.parentNode.insertBefore(script, document.currentScript);
-    };
+    },
 
-    load_rdfa_utils(function() {
-      // load jquery if not already available, then load rdf, then highlight
-      rdfa_utils.load_jquery_and_rdf(inspect_rdfa);
-      rdfa_utils.add_css(base_url + "css/rdfa-inspect.css");
-    });
+    main: function() {
+        // main bookmarklet functionality
+        rdfa_utils.add_css(rdfa_inspect.base_url + rdfa_inspect.css);
 
-    function inspect_rdfa() {
         var subjects = document.data.getSubjects();
 
         // if document does not contain any triples, notify user and exit
@@ -73,7 +72,7 @@
             }
 
             var sdiv = jQuery("<div/>").addClass('section');
-            rdfa_utils.add_subject_label(sdiv, s);
+            rdfa_utils.add_subject_label_with_anchor(sdiv, s);
 
             var ul = jQuery("<ul/>");
 
@@ -142,4 +141,11 @@
 
     } // end inspect_rdfa
 
-})();
+};
+
+
+rdfa_inspect.load_rdfa_utils(function() {
+  // load jquery + rdf, then run the bookmarklet logic
+  rdfa_utils.load_jquery_and_rdf(rdfa_inspect.main);
+});
+

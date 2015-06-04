@@ -1,31 +1,28 @@
 ---
 ---
-(function(){
-
-    // TODO: shared css for both rdfa bookmarklets
+// namespace bookmarklet functionality within rdf_highlight
+var rdfa_highlight = {
+    // TODO: common css for both rdfa bookmarklets
     // for both scripts: can we figure out a way to display nested content
     // instead of just using uri refs, so that things are more readable?
-    var base_url = "{{ site.url }}";
+    base_url: "{{ site.url }}",
+    css: "css/rdfa-highlight.css",  // relative to base url
 
     // load shared RDFa/bookmark utilities
-    var load_rdfa_utils = function (load_func) {
+    load_rdfa_utils: function (load_func) {
         //{% if site.debug %}
            console.log('loading rdfa utils');
         //{% endif %};
         var script = document.createElement("script");
         script.type = "text\/javascript";
-        script.src =  base_url + "javascripts/rdfa_utils.js";
+        script.src =  rdfa_highlight.base_url + "javascripts/rdfa_utils.js";
         script.onload = load_func;
         document.currentScript.parentNode.insertBefore(script, document.currentScript);
-    };
+    },
 
-    load_rdfa_utils(function() {
-      // load jquery if not already available, then load rdf, then highlight
-      rdfa_utils.load_jquery_and_rdf(highlight_rdfa);
-      rdfa_utils.add_css(base_url + "css/rdfa-highlight.css");
-    });
-
-    function highlight_rdfa() {
+    main: function() {
+        // main bookmarklet functionality
+        rdfa_utils.add_css(rdfa_highlight.base_url + rdfa_highlight.css);
         var subjects = document.data.getSubjects();
 
         // object relation contexts
@@ -137,4 +134,9 @@
             jQuery(this).removeClass('rdfa-item-hover');
         });
     }
-})();
+};
+
+rdfa_highlight.load_rdfa_utils(function() {
+  // load jquery if not already available, then load rdf, then highlight
+  rdfa_utils.load_jquery_and_rdf(rdfa_highlight.main);
+});

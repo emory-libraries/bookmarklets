@@ -61,13 +61,20 @@ var rdfa_utils = {
     },
 
     add_subject_label: function(parent, subject) {
+        return rdfa_utils._add_subject_label(parent, subject, false);
+    },
+
+    add_subject_label_with_anchor: function(parent, subject) {
+        return rdfa_utils._add_subject_label(parent, subject, true);
+    },
+
+    _add_subject_label: function(parent, subject, with_anchor) {
         // create a heading & label for a subject
         // displays first schema.org/name, if any, and uri (if not a blank node)
         var names = document.data.getValues(subject, 'http://schema.org/name');
         var header = jQuery("<div/>").addClass('header');
         var h3 = jQuery("<h3/>");
         var label = '';
-        var anchor = jQuery("<a/>").attr('name', subject);
         if (names.length) {
             label = names[0];
         }
@@ -77,8 +84,13 @@ var rdfa_utils = {
             // TODO: link to actual resource?
             label += subject;
         }
-        anchor.text(label);
-        h3.append(anchor);
+        if (with_anchor) {
+            var anchor = jQuery("<a/>").attr('name', subject);
+            anchor.text(label);
+            h3.append(anchor);
+        } else {
+            h3.text(label);
+        }
         header.append(h3);
         parent.append(header);
     },
