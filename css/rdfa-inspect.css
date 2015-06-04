@@ -41,6 +41,14 @@
   line-height: 1.2;
 }
 
+#rdfa-inspect .context {
+    background: #878787;
+    color: white;
+    padding: 15px 25px;
+    margin: 0 -25px 0;
+}
+
+
 #rdfa-inspect .card{
   position:relative;
   width:80%;
@@ -116,7 +124,7 @@
 }
 
 #rdfa-inspect .sublist>li:hover{
-  background: #F0FDE2;   
+  background: #F0FDE2;
   color: #333;
 }
 

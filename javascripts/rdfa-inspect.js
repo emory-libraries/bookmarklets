@@ -36,6 +36,9 @@ var rdfa_inspect = {
             return;
         }
 
+        // object relation contexts
+        var context = rdfa_utils.rdf_object_context();
+
         // NOTE or possible TODO
         // might be useful to list prefixes & urls
         // prefixes available at document.data.prefixes
@@ -54,7 +57,7 @@ var rdfa_inspect = {
         jQuery("body").append(wrapper);
 
         // bind escape key to close the div
-        jQuery(document).on('keydown.rdfa_inspect', function(event) {
+        jQuery("body").on('keydown.rdfa_inspect', function(event) {
             console.log(event);
             if (event.keyCode == 27) {
                 jQuery('#rdfa-inspect').hide();
@@ -73,6 +76,13 @@ var rdfa_inspect = {
 
             var sdiv = jQuery("<div/>").addClass('section');
             rdfa_utils.add_subject_label_with_anchor(sdiv, s);
+            // add context information
+            var ctx = context[s];
+            if (ctx) {
+                var ctxdiv = jQuery('<div class="context"/>');
+                ctxdiv.text(ctx[1] + ' ' + ctx[0] + ' ' + s);
+                sdiv.append(ctxdiv);
+            }
 
             var ul = jQuery("<ul/>");
 
