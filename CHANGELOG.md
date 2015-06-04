@@ -1,6 +1,15 @@
 Changelog
 =========
 
+1.1
+---
+
+- RDFa inspect now includes a list of the contexts where an item is
+  referenced
+- RDFa highlight now supports multiple contexts
+- Common functionality between inspect and highlight bookmarklets
+  consolidated into an RDFa utility script.
+
 1.0.1
 -----
 
