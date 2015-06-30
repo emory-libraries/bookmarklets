@@ -35,15 +35,20 @@
 /** NOTE: styles adapted from rdfa-inspect.css */
 
 .rdfa-tooltip .header {
+  color: white;
   background: #66BB6A;
   padding: 15px 25px;
   margin: 0 -20px 0;
 }
 .rdfa-tooltip .context {
     background: #878787;
-    color: white;
+    color: white !important;
     padding: 15px 25px;
     margin: 0 -20px 0;
+}
+
+.rdfa-tooltip .context:nth-child(odd) {
+  background: #A2A2A2;
 }
 
 .rdfa-tooltip ul {
